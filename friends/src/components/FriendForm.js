@@ -4,7 +4,7 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 import { FriendsContext } from '../contexts/FriendsContext';
 
 const FriendForm = () => {
-  const { setFriends } = useContext(FriendsContext);
+  const { setFriends, friendToEdit } = useContext(FriendsContext);
 
   const [formState, setFormState] = useState({
     name: '',
@@ -42,15 +42,43 @@ const FriendForm = () => {
     });
   }, [formState]);
 
+  useEffect(() => {
+    if (friendToEdit) {
+      setFormState(friendToEdit);
+    }
+  }, [friendToEdit]);
+
+  const addFriend = (friend) => {
+    if (friend.id) {
+      axiosWithAuth()
+        .put(`http://localhost:5000/api/friends/${friend.id}`, friend)
+        .then((res) => {
+          setFriends(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axiosWithAuth()
+        .post('http://localhost:5000/api/friends', friend)
+        .then((res) => {
+          console.log(res);
+          setFriends(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   const formSubmit = (e) => {
     e.preventDefault();
-    axiosWithAuth()
-      .post('http://localhost:5000/api/friends', formState)
-      .then((res) => {
-        console.log(res);
-        setFriends(res.data);
-      })
-      .catch((err) => console.log(err));
+    addFriend(formState);
+
+    // axiosWithAuth()
+    //   .post('http://localhost:5000/api/friends', formState)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setFriends(res.data);
+    //   })
+    //   .catch((err) => console.log(err));
+
     setFormState({
       name: '',
       age: '',
