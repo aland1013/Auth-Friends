@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import * as yup from 'yup';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import { FriendsContext } from '../contexts/FriendsContext';
 
 const FriendForm = () => {
+  const { setFriends } = useContext(FriendsContext);
+
   const [formState, setFormState] = useState({
     name: '',
     age: '',
@@ -43,7 +46,10 @@ const FriendForm = () => {
     e.preventDefault();
     axiosWithAuth()
       .post('http://localhost:5000/api/friends', formState)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        setFriends(res.data);
+      })
       .catch((err) => console.log(err));
     setFormState({
       name: '',

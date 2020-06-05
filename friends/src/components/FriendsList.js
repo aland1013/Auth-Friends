@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import { FriendsContext } from '../contexts/FriendsContext';
 import FriendForm from './FriendForm';
 
 const FriendsList = () => {
@@ -16,7 +17,7 @@ const FriendsList = () => {
   }, []);
 
   return (
-    <>
+    <FriendsContext.Provider value={{ setFriends }}>
       <h2 className='ui horizontal divider header'>
         <i className='users icon'></i>
         FriendsList
@@ -38,7 +39,7 @@ const FriendsList = () => {
       </div>
       <div className='ui hidden divider'></div>
       <FriendForm />
-    </>
+    </FriendsContext.Provider>
   );
 };
 
