@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({});
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
