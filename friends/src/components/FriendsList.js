@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import FriendForm from './FriendForm';
 
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
@@ -33,10 +34,10 @@ const FriendsList = () => {
               </div>
             </div>
           );
-          // <li key={friend.id}>{friend.name}</li>
         })}
       </div>
-      <ul></ul>
+      <div className='ui hidden divider'></div>
+      <FriendForm />
     </>
   );
 };
