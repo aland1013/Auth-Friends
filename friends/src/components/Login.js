@@ -24,7 +24,6 @@ const Login = (props) => {
         localStorage.setItem('token', res.data.payload);
         console.log('token', res.data.payload);
         setIsLoading(false);
-        console.log('Login props', props);
         props.history.push('/friendsList');
       })
       .catch((err) => {
