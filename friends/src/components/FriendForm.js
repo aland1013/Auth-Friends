@@ -4,13 +4,9 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 import { FriendsContext } from '../contexts/FriendsContext';
 
 const FriendForm = () => {
-  const { setFriends, friendToEdit } = useContext(FriendsContext);
-
-  const [formState, setFormState] = useState({
-    name: '',
-    age: '',
-    email: ''
-  });
+  const { setFriends, friendToEdit, formState, setFormState } = useContext(
+    FriendsContext
+  );
 
   const [errors, setErrors] = useState({
     name: '',
@@ -103,7 +99,7 @@ const FriendForm = () => {
         Add a Friend
       </h3>
       <form className='ui form' onSubmit={formSubmit}>
-        <div className='field'>
+        <div className='six wide field'>
           <label htmlFor='name'>
             Name
             <input
@@ -114,7 +110,7 @@ const FriendForm = () => {
             />
           </label>
         </div>
-        <div className='field'>
+        <div className='two wide field'>
           <label htmlFor='age'>
             Age
             <input
@@ -125,7 +121,7 @@ const FriendForm = () => {
             />
           </label>
         </div>
-        <div className='field'>
+        <div className='six wide field'>
           <label htmlFor='email'>
             Email Address
             <input

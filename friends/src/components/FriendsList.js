@@ -6,6 +6,11 @@ import FriendForm from './FriendForm';
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
   const [friendToEdit, setFriendToEdit] = useState({});
+  const [formState, setFormState] = useState({
+    name: '',
+    age: '',
+    email: ''
+  });
 
   useEffect(() => {
     axiosWithAuth()
@@ -20,13 +25,26 @@ const FriendsList = () => {
   const deleteFriend = (id) => {
     axiosWithAuth()
       .delete(`http://localhost:5000/api/friends/${id}`)
-      .then((res) => setFriends(res.data))
+      .then((res) => {
+        setFriends(res.data);
+        setFormState({
+          name: '',
+          age: '',
+          email: ''
+        });
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <FriendsContext.Provider
-      value={{ setFriends, friendToEdit, setFriendToEdit }}
+      value={{
+        setFriends,
+        friendToEdit,
+        setFriendToEdit,
+        formState,
+        setFormState
+      }}
     >
       <h2 className='ui horizontal divider header'>
         <i className='users icon'></i>
@@ -44,17 +62,19 @@ const FriendsList = () => {
                 </div>
               </div>
               <div className='extra content'>
-                <div
-                  className='ui two buttons'
-                  onClick={() => deleteFriend(friend.id)}
-                >
+                <div className='ui two buttons'>
                   <div
                     className='ui basic blue button'
                     onClick={() => setFriendToEdit(friend)}
                   >
                     edit
                   </div>
-                  <div className='ui basic red button'>delete</div>
+                  <div
+                    className='ui basic red button'
+                    onClick={() => deleteFriend(friend.id)}
+                  >
+                    delete
+                  </div>
                 </div>
               </div>
             </div>
